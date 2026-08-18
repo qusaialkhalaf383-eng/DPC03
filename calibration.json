@@ -1,0 +1,122 @@
+{
+  "Keep_Physical": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.0165,
+    "brier_score": 0.0092,
+    "raw_ece_uncalibrated": 0.0165,
+    "raw_brier_uncalibrated": 0.0092,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Increase_Safety_Stock": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.016,
+    "brier_score": 0.014,
+    "raw_ece_uncalibrated": 0.016,
+    "raw_brier_uncalibrated": 0.014,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Reduce_Stock": {
+    "winning_model": "LightGBM",
+    "best_calibration_method": "isotonic",
+    "ece": 0.0097,
+    "brier_score": 0.006,
+    "raw_ece_uncalibrated": 0.014,
+    "raw_brier_uncalibrated": 0.0119,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Digitize": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.051,
+    "brier_score": 0.0331,
+    "raw_ece_uncalibrated": 0.051,
+    "raw_brier_uncalibrated": 0.0331,
+    "is_well_calibrated": false,
+    "display_format": "PartIQ Score = XX/100"
+  },
+  "Reverse_Engineer": {
+    "winning_model": "LightGBM",
+    "best_calibration_method": "isotonic",
+    "ece": 0.0009,
+    "brier_score": 0.0002,
+    "raw_ece_uncalibrated": 0.0074,
+    "raw_brier_uncalibrated": 0.0005,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Repair": {
+    "winning_model": "XGBoost",
+    "best_calibration_method": "none",
+    "ece": 0.0515,
+    "brier_score": 0.0119,
+    "raw_ece_uncalibrated": 0.0515,
+    "raw_brier_uncalibrated": 0.0119,
+    "is_well_calibrated": false,
+    "display_format": "PartIQ Score = XX/100"
+  },
+  "OEM_Purchase": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "isotonic",
+    "ece": 0.0001,
+    "brier_score": 0.0,
+    "raw_ece_uncalibrated": 0.0016,
+    "raw_brier_uncalibrated": 0.0,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Local_Source": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "isotonic",
+    "ece": 0.0176,
+    "brier_score": 0.0223,
+    "raw_ece_uncalibrated": 0.0302,
+    "raw_brier_uncalibrated": 0.0241,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "CNC_Candidate": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "isotonic",
+    "ece": 0.002,
+    "brier_score": 0.0005,
+    "raw_ece_uncalibrated": 0.0287,
+    "raw_brier_uncalibrated": 0.0033,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "AM_Candidate": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.0168,
+    "brier_score": 0.0149,
+    "raw_ece_uncalibrated": 0.0168,
+    "raw_brier_uncalibrated": 0.0149,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Cast_Forge_Candidate": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.0154,
+    "brier_score": 0.0072,
+    "raw_ece_uncalibrated": 0.0154,
+    "raw_brier_uncalibrated": 0.0072,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  },
+  "Engineering_Review": {
+    "winning_model": "CatBoost",
+    "best_calibration_method": "none",
+    "ece": 0.013,
+    "brier_score": 0.0082,
+    "raw_ece_uncalibrated": 0.013,
+    "raw_brier_uncalibrated": 0.0082,
+    "is_well_calibrated": true,
+    "display_format": "Probability = XX%"
+  }
+}

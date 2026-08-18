@@ -1,0 +1,9 @@
+{
+  "micro_f1": 0.9766,
+  "macro_f1": 0.9726,
+  "weighted_f1": 0.9764,
+  "hamming_loss": 0.0095,
+  "subset_accuracy": 0.8644,
+  "mean_average_precision": 0.9941,
+  "n_test_rows": 450
+}

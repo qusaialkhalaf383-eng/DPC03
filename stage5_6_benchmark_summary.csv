@@ -1,0 +1,16 @@
+target,LogReg,CatBoost,XGBoost,LightGBM,Winner
+AM_Candidate,0.923,0.982,0.978,0.985,LightGBM
+CNC_Candidate,0.979,0.994,0.992,0.994,CatBoost
+Cast_Forge_Candidate,0.672,0.978,0.966,0.925,CatBoost
+Consolidate_Duplicate,1.0,1.0,1.0,1.0,CatBoost
+Digitize,0.76,0.859,0.756,0.824,CatBoost
+Engineering_Review,0.883,0.98,0.939,0.964,CatBoost
+IP_Legal_Review,1.0,1.0,1.0,1.0,CatBoost
+Increase_Safety_Stock,0.886,0.899,0.844,0.906,LightGBM
+Keep_Physical,0.941,0.978,0.966,0.968,CatBoost
+Local_Source,0.902,0.953,0.89,0.93,CatBoost
+OEM_Purchase,0.947,1.0,0.987,1.0,CatBoost
+Reduce_Stock,0.615,0.902,0.92,0.902,XGBoost
+Repair,0.694,0.893,0.825,0.893,CatBoost
+Reverse_Engineer,1.0,1.0,0.993,1.0,CatBoost
+Standard_Commercial_Action,1.0,1.0,1.0,1.0,CatBoost

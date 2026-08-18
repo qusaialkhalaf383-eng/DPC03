@@ -1,0 +1,60 @@
+# DPC PartIQ - Engineering Rules Engine Configuration
+# Runs AFTER ML predictions, BEFORE the final recommendation (Section 15 / 35).
+#
+# The three "deterministic_gate" rules below were promoted from ML targets to hard
+# rules after Stage 5/6 benchmarking showed they are 100% determined by a single raw
+# input field in the synthetic label generator (verified by crosstab, zero
+# counter-examples in 2,100 training rows). Training an ML model on a 1:1 copy of an
+# existing field adds no predictive value and misrepresents what the model has learned.
+# This matches the brief's own expected outcome for IP_Legal_Review ("Rules+ML").
+
+deterministic_gates:
+  - name: ip_legal_review_gate
+    target: IP_Legal_Review
+    condition: "IP_Restriction == 'Yes'"
+    action: "IP_Legal_Review = Mandatory"
+    evidence: "Perfect 1:1 correspondence in training data (139/139 positive rows have IP_Restriction=Yes; 0 counter-examples in 2,100 rows)."
+    ml_role: "none - rule fully replaces the classifier for this target"
+
+  - name: standard_commercial_action_gate
+    target: Standard_Commercial_Action
+    condition: "Standard_Commercial_Part == 'Yes'"
+    action: "Standard_Commercial_Action = Recommended"
+    evidence: "Perfect 1:1 correspondence (268/268 positive rows have Standard_Commercial_Part=Yes; 0 counter-examples)."
+    ml_role: "none - rule fully replaces the classifier for this target"
+
+  - name: consolidate_duplicate_gate
+    target: Consolidate_Duplicate
+    condition: "has_duplicate_group == 1"   # derived from Duplicate_Group_ID.notna()
+    action: "Consolidate_Duplicate = Recommended"
+    evidence: "Perfect 1:1 correspondence (241/241 positive rows have has_duplicate_group=1; 0 counter-examples)."
+    ml_role: "none - rule fully replaces the classifier for this target"
+
+near_deterministic_watchlist:
+  # Not converted to hard rules (no single field gives a perfect match), but a shallow
+  # depth-3 decision tree already reaches 95-98% TRAIN accuracy using 3-4 raw fields.
+  # These stay as ML targets but are flagged for extra scrutiny in the Stage 22
+  # generalization challenge (held-out sector / component family) before trusting the
+  # near-perfect validation F1 as evidence of genuine multi-factor learning rather than
+  # memorization of a simple synthetic rule.
+  - target: Reverse_Engineer
+    dominant_features: [Drawing_Available, CAD_Available, Original_Process, OEM_Status, Asset_Criticality]
+    shallow_tree_train_accuracy: 0.954
+  - target: OEM_Purchase
+    dominant_features: [Original_Process, Safety_Critical, OEM_Obsolete]
+    shallow_tree_train_accuracy: 0.983
+
+safety_gate:
+  condition: "Safety_Critical == 'Yes' AND technical_data_completeness < 0.75"
+  action: "Engineering_Review = Mandatory"
+  note: "Overrides ML prediction when true, regardless of model confidence (Section 35: ML never has final authority on safety)."
+
+ip_gate:
+  condition: "IP_Restriction == 'Yes'"
+  action: "IP_Legal_Review = Mandatory"
+  note: "Duplicate of ip_legal_review_gate above, kept here for clarity as the canonical Section 15 'IP gate' name."
+
+missing_data_gate:
+  condition: "technical_data_completeness < 0.50"
+  action: "Suppress manufacturing-ready recommendations (CNC_Candidate, AM_Candidate, Cast_Forge_Candidate); force Engineering_Review = Mandatory instead."
+  note: "Prevents PartIQ from issuing a manufacturing recommendation on parts with insufficient engineering data."

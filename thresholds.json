@@ -1,0 +1,125 @@
+{
+  "Keep_Physical": {
+    "winning_model": "CatBoost",
+    "threshold": 0.4938,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.9903,
+    "validation_recall_at_threshold": 0.9808,
+    "validation_f1_at_threshold": 0.9855,
+    "validation_f1_at_0.50": 0.9831
+  },
+  "Increase_Safety_Stock": {
+    "winning_model": "CatBoost",
+    "threshold": 0.917,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.9375,
+    "validation_recall_at_threshold": 0.9375,
+    "validation_f1_at_threshold": 0.9375,
+    "validation_f1_at_0.50": 0.8986
+  },
+  "Reduce_Stock": {
+    "winning_model": "LightGBM",
+    "threshold": 0.9665,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 1.0,
+    "validation_recall_at_threshold": 0.9167,
+    "validation_f1_at_threshold": 0.9565,
+    "validation_f1_at_0.50": 0.902
+  },
+  "Digitize": {
+    "winning_model": "CatBoost",
+    "threshold": 0.5958,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.8289,
+    "validation_recall_at_threshold": 0.9692,
+    "validation_f1_at_threshold": 0.8936,
+    "validation_f1_at_0.50": 0.8725
+  },
+  "Reverse_Engineer": {
+    "winning_model": "LightGBM",
+    "threshold": 0.779,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 1.0,
+    "validation_recall_at_threshold": 1.0,
+    "validation_f1_at_threshold": 1.0,
+    "validation_f1_at_0.50": 1.0
+  },
+  "Repair": {
+    "winning_model": "XGBoost",
+    "threshold": 0.9136,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 1.0,
+    "validation_recall_at_threshold": 0.8889,
+    "validation_f1_at_threshold": 0.9412,
+    "validation_f1_at_0.50": 0.8571
+  },
+  "OEM_Purchase": {
+    "winning_model": "CatBoost",
+    "threshold": 0.9692,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 1.0,
+    "validation_recall_at_threshold": 1.0,
+    "validation_f1_at_threshold": 1.0,
+    "validation_f1_at_0.50": 0.9955
+  },
+  "Local_Source": {
+    "winning_model": "CatBoost",
+    "threshold": 0.5871,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.947,
+    "validation_recall_at_threshold": 0.9728,
+    "validation_f1_at_threshold": 0.9597,
+    "validation_f1_at_0.50": 0.9502
+  },
+  "CNC_Candidate": {
+    "winning_model": "CatBoost",
+    "threshold": 0.6799,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 1.0,
+    "validation_recall_at_threshold": 1.0,
+    "validation_f1_at_threshold": 1.0,
+    "validation_f1_at_0.50": 1.0
+  },
+  "AM_Candidate": {
+    "winning_model": "CatBoost",
+    "threshold": 0.7061,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.971,
+    "validation_recall_at_threshold": 1.0,
+    "validation_f1_at_threshold": 0.9853,
+    "validation_f1_at_0.50": 0.9853
+  },
+  "Cast_Forge_Candidate": {
+    "winning_model": "CatBoost",
+    "threshold": 0.7622,
+    "profile": "balanced (max F1)",
+    "validation_precision_at_threshold": 0.9778,
+    "validation_recall_at_threshold": 1.0,
+    "validation_f1_at_threshold": 0.9888,
+    "validation_f1_at_0.50": 0.967
+  },
+  "Engineering_Review": {
+    "winning_model": "CatBoost",
+    "threshold": 0.9144,
+    "profile": "high_recall (floor=0.9)",
+    "validation_precision_at_threshold": 0.9785,
+    "validation_recall_at_threshold": 0.9479,
+    "validation_f1_at_threshold": 0.963,
+    "validation_f1_at_0.50": 0.9794
+  },
+  "Consolidate_Duplicate": {
+    "winning_model": "Rule",
+    "threshold": null,
+    "profile": "deterministic_gate (see config/rules.yaml)"
+  },
+  "IP_Legal_Review": {
+    "winning_model": "Rule",
+    "threshold": null,
+    "profile": "deterministic_gate (see config/rules.yaml)"
+  },
+  "Standard_Commercial_Action": {
+    "winning_model": "Rule",
+    "threshold": null,
+    "profile": "deterministic_gate (see config/rules.yaml)"
+  }
+}

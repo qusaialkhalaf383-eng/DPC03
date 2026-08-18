@@ -1,0 +1,51 @@
+{
+  "version": "DPC_PartIQ_Demo_v0.1",
+  "trained_at": "2026-08-18T04:54:52.261411",
+  "ml_targets": [
+    "Keep_Physical",
+    "Increase_Safety_Stock",
+    "Reduce_Stock",
+    "Digitize",
+    "Reverse_Engineer",
+    "Repair",
+    "OEM_Purchase",
+    "Local_Source",
+    "CNC_Candidate",
+    "AM_Candidate",
+    "Cast_Forge_Candidate",
+    "Engineering_Review"
+  ],
+  "rule_targets": [
+    "IP_Legal_Review",
+    "Standard_Commercial_Action",
+    "Consolidate_Duplicate"
+  ],
+  "winning_models": {
+    "Keep_Physical": "CatBoost",
+    "Increase_Safety_Stock": "CatBoost",
+    "Reduce_Stock": "LightGBM",
+    "Digitize": "CatBoost",
+    "Reverse_Engineer": "LightGBM",
+    "Repair": "XGBoost",
+    "OEM_Purchase": "CatBoost",
+    "Local_Source": "CatBoost",
+    "CNC_Candidate": "CatBoost",
+    "AM_Candidate": "CatBoost",
+    "Cast_Forge_Candidate": "CatBoost",
+    "Engineering_Review": "CatBoost"
+  },
+  "thresholds": {
+    "Keep_Physical": 0.4938,
+    "Increase_Safety_Stock": 0.917,
+    "Reduce_Stock": 0.9665,
+    "Digitize": 0.5958,
+    "Reverse_Engineer": 0.779,
+    "Repair": 0.9136,
+    "OEM_Purchase": 0.9692,
+    "Local_Source": 0.5871,
+    "CNC_Candidate": 0.6799,
+    "AM_Candidate": 0.7061,
+    "Cast_Forge_Candidate": 0.7622,
+    "Engineering_Review": 0.9144
+  }
+}

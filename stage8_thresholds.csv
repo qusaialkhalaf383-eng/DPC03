@@ -1,0 +1,13 @@
+target,winning_model,threshold,profile,validation_precision_at_threshold,validation_recall_at_threshold,validation_f1_at_threshold,validation_f1_at_0.50
+Keep_Physical,CatBoost,0.4938,balanced (max F1),0.9903,0.9808,0.9855,0.9831
+Increase_Safety_Stock,CatBoost,0.917,balanced (max F1),0.9375,0.9375,0.9375,0.8986
+Reduce_Stock,LightGBM,0.9665,balanced (max F1),1.0,0.9167,0.9565,0.902
+Digitize,CatBoost,0.5958,balanced (max F1),0.8289,0.9692,0.8936,0.8725
+Reverse_Engineer,LightGBM,0.779,balanced (max F1),1.0,1.0,1.0,1.0
+Repair,XGBoost,0.9136,balanced (max F1),1.0,0.8889,0.9412,0.8571
+OEM_Purchase,CatBoost,0.9692,balanced (max F1),1.0,1.0,1.0,0.9955
+Local_Source,CatBoost,0.5871,balanced (max F1),0.947,0.9728,0.9597,0.9502
+CNC_Candidate,CatBoost,0.6799,balanced (max F1),1.0,1.0,1.0,1.0
+AM_Candidate,CatBoost,0.7061,balanced (max F1),0.971,1.0,0.9853,0.9853
+Cast_Forge_Candidate,CatBoost,0.7622,balanced (max F1),0.9778,1.0,0.9888,0.967
+Engineering_Review,CatBoost,0.9144,high_recall (floor=0.9),0.9785,0.9479,0.963,0.9794

@@ -1,0 +1,135 @@
+# DPC PartIQ - Column Classification
+# Generated at Stage 1/2 (dataset inspection + leakage audit)
+# Source file: DPC_PartIQ_Demo_Training_Data_3000.xlsx (header row = Excel row 4)
+# Total columns: 95 | Total rows: 3000
+
+metadata_identifier:
+  # Never used as predictive features. Used for joins, splitting, or provenance only.
+  - Data_Type            # constant string, zero variance, provenance tag only
+  - Part_ID               # unique identifier, 3000/3000 unique
+  - Equipment_ID           # asset identifier, not generalizable across new parts
+  - Duplicate_Group_ID     # see special_case_features below
+  - Outcome_Available      # flags whether real-world outcome exists (future/reporting metadata)
+  - Model_Split            # split control column, provided pre-made (Train/Validation/Test)
+
+legitimate_model_input:
+  identity_context:
+    - Sector
+    - Plant_Area
+    - Equipment_Class
+    - Component_Category
+    - Part_Description        # free text; excluded from baseline tabular models, reserved for future NLP feature work
+    - OEM_Name
+    - OEM_Status
+    - Standard_Commercial_Part
+  material_geometry:
+    - Material_Group
+    - Material_Grade
+    - Original_Process
+    - Weight_kg
+    - Max_Dimension_mm
+    - Geometry_Complexity
+    - Tolerance_Class
+    - Surface_Finish_Ra_um
+    - Operating_Temperature_C
+    - Operating_Pressure_bar
+    - Rotating_Part
+  maintenance_operational:
+    - Safety_Critical
+    - Asset_Criticality        # categorical input rating (distinct from Asset_Criticality_Score, which is derived/excluded)
+    - Failure_Frequency_per_year
+    - Downtime_Cost_AED_per_day
+    - MTBF_months
+    - Failure_Mode_Known
+    - Failure_Mode
+    - Repair_History
+  inventory:
+    - Current_Stock_Qty
+    - Min_Stock_Qty
+    - Annual_Consumption
+    - Unit_Cost_AED
+    - Inventory_Value_AED      # arithmetic derivative of stock x cost, available pre-decision -> legitimate
+  procurement:
+    - Lead_Time_Days
+    - Supplier_Count
+    - Approved_Local_Suppliers
+    - MOQ
+    - Last_Purchase_Days_Ago
+    - Emergency_Purchase_Count_3Y
+    - OEM_Obsolete
+  technical_data_availability:
+    - Drawing_Available
+    - CAD_Available
+    - Material_Certificate_Available
+    - Inspection_History_Available
+  governance:
+    - IP_Restriction
+
+special_case_features:
+  Duplicate_Group_ID:
+    treatment: >
+      Raw ID excluded as a feature (arbitrary label, not generalizable).
+      A derived boolean `has_duplicate_group` (True/False, from notna()) IS permitted
+      as an engineered input feature -- it reflects a data-matching fact known before
+      any recommendation is made, not a post-decision outcome. Flagged for review because
+      it is highly correlated with Consolidate_Duplicate; document this explicitly in the
+      model card and monitor its SHAP contribution for that target specifically.
+
+derived_scoring_output:
+  # Model-generated risk/suitability scores. These are effectively pre-computed answers
+  # to the same questions PartIQ is being trained to predict -- using them as INPUTS
+  # would leak the target. Excluded from all predictive feature sets.
+  - Asset_Criticality_Score
+  - Supply_Risk_Score
+  - Obsolescence_Risk_Score
+  - Stockout_Risk_Score
+  - Excess_Inventory_Risk_Score
+  - Downtime_Exposure_Score
+  - Data_Completeness_Score       # will be independently REBUILT in Stage 16 from raw availability flags, not reused
+  - Digitization_Priority_Score
+  - Reverse_Engineering_Need_Score
+  - CNC_Suitability_Score
+  - AM_Suitability_Score
+  - Casting_Suitability_Score
+  - Repair_Suitability_Score
+  - Localization_Opportunity_Score
+  - Manufacturing_Readiness_Score
+  - Business_Opportunity_Score
+
+model_target:
+  # The 15 multi-label targets. Binary 0/1, confirmed clean, no missing values.
+  - Keep_Physical
+  - Increase_Safety_Stock
+  - Reduce_Stock
+  - Consolidate_Duplicate
+  - Standard_Commercial_Action
+  - Digitize
+  - Reverse_Engineer
+  - Repair
+  - OEM_Purchase
+  - Local_Source
+  - CNC_Candidate
+  - AM_Candidate
+  - Cast_Forge_Candidate
+  - Engineering_Review
+  - IP_Legal_Review
+
+post_decision_information:
+  # Generated AFTER / AS PART OF the recommendation process, or describing the synthetic
+  # label-generation process itself. Never used as predictive input. Some are reserved as
+  # targets for separate downstream models (explicitly noted).
+  - Primary_Recommendation        # literally restates the multi-label target combination
+  - Secondary_Actions             # same
+  - Decision_Rationale            # free text explaining the decision -- direct leakage
+  - PartIQ_Readiness_Level        # post-hoc readiness bucket derived from the decision
+  - Simulated_Expert_Agreement    # metadata about the synthetic labeling process, not a real part attribute
+  - Label_Quality                 # metadata about the synthetic labeling process
+  - Decision_Confidence_pct       # output of the (simulated) decision process
+  - Confidence_Band               # output of the (simulated) decision process
+  - Actual_Route                  # real-world outcome; reserved as target for a SEPARATE downstream
+                                   #   "decision-vs-actual" agreement model, never a Stage-6 input
+  - Actual_Cost_AED               # real-world outcome; reserved for the optimizer's cost-model calibration only
+  - Actual_Lead_Time_Days         # real-world outcome
+  - Inspection_Result             # real-world outcome
+  - Field_Operating_Hours         # real-world outcome
+  - Field_Failure                 # real-world outcome

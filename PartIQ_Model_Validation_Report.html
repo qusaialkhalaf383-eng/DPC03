@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DPC PartIQ Model Validation Report</title>
+<style>
+  body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 0;
+          background: #f7f8fa; color: #1a1a1a; line-height: 1.55; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+  header { background: #0b3d2e; color: white; padding: 40px 24px; }
+  header .wrap { padding: 0; }
+  h1 { margin: 0 0 8px; font-size: 28px; }
+  h2 { margin-top: 48px; border-bottom: 2px solid #0b3d2e; padding-bottom: 6px; color: #0b3d2e; }
+  h3 { color: #145c44; margin-top: 28px; }
+  .subtitle { opacity: 0.85; font-size: 15px; }
+  .banner { background: #fff3cd; border: 1px solid #ffe69c; color: #664d03; padding: 14px 18px;
+             border-radius: 6px; margin: 20px 0; font-weight: 600; }
+  .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 20px 0; }
+  .metric-card { background: white; border: 1px solid #e2e5e9; border-radius: 8px; padding: 16px; }
+  .metric-card .label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.03em; }
+  .metric-card .value { font-size: 26px; font-weight: 700; color: #0b3d2e; margin-top: 4px; }
+  table.data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13.5px; background: white; }
+  table.data-table th { background: #0b3d2e; color: white; text-align: left; padding: 8px 10px; }
+  table.data-table td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+  table.data-table tr:nth-child(even) { background: #fafbfc; }
+  .callout { background: white; border-left: 4px solid #0b3d2e; padding: 14px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .callout.warn { border-left-color: #d97706; background: #fffaf0; }
+  code { background: #eef1f4; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+  footer { text-align: center; color: #888; font-size: 12px; margin-top: 60px; }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>DPC PartIQ &mdash; Model Validation Report</h1>
+  <div class="subtitle">Spare Parts Intelligence &amp; Optimization Platform &middot; Model version DPC_PartIQ_Demo_v0.1 &middot; Trained 2026-08-18T04:54:52 UTC</div>
+</div></header>
+
+<div class="wrap">
+<div class="banner">&#9888;&#65039; Demonstration model trained on synthetic industrial data (DPC_PartIQ_Demo_Training_Data_3000). Results do not represent validated field performance.</div>
+
+<h2>1. Dataset Summary</h2>
+<div class="metric-grid">
+  <div class="metric-card"><div class="label">Total Records</div><div class="value">3,000</div></div>
+  <div class="metric-card"><div class="label">Total Columns</div><div class="value">95</div></div>
+  <div class="metric-card"><div class="label">Legitimate Input Features</div><div class="value">61</div></div>
+  <div class="metric-card"><div class="label">Multi-label Targets</div><div class="value">15</div></div>
+  <div class="metric-card"><div class="label">Train / Val / Test</div><div class="value">2100 / 450 / 450</div></div>
+</div>
+
+<h2>2. Leakage Analysis</h2>
+<p>Every column was classified before any modeling (full detail in <code>config/column_classification.yaml</code>).
+Three targets turned out to be exact 1:1 copies of a single raw input field in this synthetic dataset and were moved
+to a deterministic rules engine instead of being modeled with ML (see Section 4).</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>column</th>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Asset_Criticality_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Supply_Risk_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Obsolescence_Risk_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Stockout_Risk_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Excess_Inventory_Risk_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Downtime_Exposure_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Data_Completeness_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Digitization_Priority_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineering_Need_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>CNC_Suitability_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>AM_Suitability_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Casting_Suitability_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Repair_Suitability_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Localization_Opportunity_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Manufacturing_Readiness_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Business_Opportunity_Score</td>
+      <td>Derived/scoring output (excluded)</td>
+    </tr>
+    <tr>
+      <td>Primary_Recommendation</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Secondary_Actions</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Decision_Rationale</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>PartIQ_Readiness_Level</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Simulated_Expert_Agreement</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Label_Quality</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Decision_Confidence_pct</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Confidence_Band</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Actual_Route</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Actual_Cost_AED</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Actual_Lead_Time_Days</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Inspection_Result</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Field_Operating_Hours</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Field_Failure</td>
+      <td>Post-decision information (excluded)</td>
+    </tr>
+    <tr>
+      <td>Data_Type</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+    <tr>
+      <td>Part_ID</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+    <tr>
+      <td>Equipment_ID</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+    <tr>
+      <td>Duplicate_Group_ID</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+    <tr>
+      <td>Outcome_Available</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+    <tr>
+      <td>Model_Split</td>
+      <td>Metadata/identifier (excluded)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>3. Model Comparison (Hyperparameter Tuning, Validation Set)</h2>
+<p>CatBoost, XGBoost, and LightGBM benchmarked per target with Optuna-tuned hyperparameters (train+validation only, test set untouched). Best-model-per-target selection, not a forced single winner.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>model</th>
+      <th>tuned_pr_auc</th>
+      <th>tuned_f1_at_0.5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>0.9990</td>
+      <td>0.9831</td>
+    </tr>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>XGBoost</td>
+      <td>0.9977</td>
+      <td>0.9756</td>
+    </tr>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>LightGBM</td>
+      <td>0.9977</td>
+      <td>0.9631</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9829</td>
+      <td>0.8986</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>XGBoost</td>
+      <td>0.9496</td>
+      <td>0.8611</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>LightGBM</td>
+      <td>0.9555</td>
+      <td>0.9091</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9621</td>
+      <td>0.8627</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>XGBoost</td>
+      <td>0.9757</td>
+      <td>0.8727</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>0.9879</td>
+      <td>0.9020</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>0.9686</td>
+      <td>0.8725</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>XGBoost</td>
+      <td>0.9055</td>
+      <td>0.7778</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>LightGBM</td>
+      <td>0.9399</td>
+      <td>0.8369</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>CatBoost</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>XGBoost</td>
+      <td>1.0000</td>
+      <td>0.9853</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>CatBoost</td>
+      <td>0.9837</td>
+      <td>0.8667</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>0.9844</td>
+      <td>0.8571</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>LightGBM</td>
+      <td>0.9829</td>
+      <td>0.9259</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>1.0000</td>
+      <td>0.9955</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>XGBoost</td>
+      <td>0.9994</td>
+      <td>0.9569</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>LightGBM</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>0.9928</td>
+      <td>0.9502</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>XGBoost</td>
+      <td>0.9830</td>
+      <td>0.9329</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>LightGBM</td>
+      <td>0.9895</td>
+      <td>0.9431</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>XGBoost</td>
+      <td>0.9984</td>
+      <td>0.9918</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>LightGBM</td>
+      <td>0.9998</td>
+      <td>0.9938</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9994</td>
+      <td>0.9853</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>XGBoost</td>
+      <td>0.9981</td>
+      <td>0.9638</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>LightGBM</td>
+      <td>0.9988</td>
+      <td>0.9851</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9995</td>
+      <td>0.9670</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>XGBoost</td>
+      <td>0.9656</td>
+      <td>0.9032</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>LightGBM</td>
+      <td>0.9948</td>
+      <td>0.9663</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>0.9921</td>
+      <td>0.9794</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>XGBoost</td>
+      <td>0.9741</td>
+      <td>0.9223</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>LightGBM</td>
+      <td>0.9905</td>
+      <td>0.9596</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>4. Final Model Chosen Per Target</h2>
+<div class="callout">Three targets (<code>IP_Legal_Review</code>, <code>Standard_Commercial_Action</code>, <code>Consolidate_Duplicate</code>)
+are handled by deterministic rules, not ML &mdash; each is a verified 1:1 function of a single raw field with zero
+counter-examples in 2,100 training rows. See <code>config/rules.yaml</code>.</div>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>winning_model</th>
+      <th>threshold</th>
+      <th>profile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>0.4938</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9170</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>0.9665</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>0.5958</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>0.7790</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>0.9136</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>0.9692</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>0.5871</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.6799</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.7061</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.7622</td>
+      <td>balanced (max F1)</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>0.9144</td>
+      <td>high_recall (floor=0.9)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>5. Thresholds</h2>
+<p>Per-target thresholds optimized on the validation set &mdash; not a blanket 0.50 cutoff. <code>Engineering_Review</code> uses a recall-floor
+profile (&ge;90% recall) since a false negative there is worse than a false positive.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>winning_model</th>
+      <th>threshold</th>
+      <th>profile</th>
+      <th>validation_precision_at_threshold</th>
+      <th>validation_recall_at_threshold</th>
+      <th>validation_f1_at_threshold</th>
+      <th>validation_f1_at_0.50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>0.4938</td>
+      <td>balanced (max F1)</td>
+      <td>0.9903</td>
+      <td>0.9808</td>
+      <td>0.9855</td>
+      <td>0.9831</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9170</td>
+      <td>balanced (max F1)</td>
+      <td>0.9375</td>
+      <td>0.9375</td>
+      <td>0.9375</td>
+      <td>0.8986</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>0.9665</td>
+      <td>balanced (max F1)</td>
+      <td>1.0000</td>
+      <td>0.9167</td>
+      <td>0.9565</td>
+      <td>0.9020</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>0.5958</td>
+      <td>balanced (max F1)</td>
+      <td>0.8289</td>
+      <td>0.9692</td>
+      <td>0.8936</td>
+      <td>0.8725</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>0.7790</td>
+      <td>balanced (max F1)</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>0.9136</td>
+      <td>balanced (max F1)</td>
+      <td>1.0000</td>
+      <td>0.8889</td>
+      <td>0.9412</td>
+      <td>0.8571</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>0.9692</td>
+      <td>balanced (max F1)</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.9955</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>0.5871</td>
+      <td>balanced (max F1)</td>
+      <td>0.9470</td>
+      <td>0.9728</td>
+      <td>0.9597</td>
+      <td>0.9502</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.6799</td>
+      <td>balanced (max F1)</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.7061</td>
+      <td>balanced (max F1)</td>
+      <td>0.9710</td>
+      <td>1.0000</td>
+      <td>0.9853</td>
+      <td>0.9853</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.7622</td>
+      <td>balanced (max F1)</td>
+      <td>0.9778</td>
+      <td>1.0000</td>
+      <td>0.9888</td>
+      <td>0.9670</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>0.9144</td>
+      <td>high_recall (floor=0.9)</td>
+      <td>0.9785</td>
+      <td>0.9479</td>
+      <td>0.9630</td>
+      <td>0.9794</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>6. Calibration</h2>
+<p>Isotonic vs sigmoid compared per target. Only targets with Expected Calibration Error (ECE) below 0.05 are shown as
+<code>Probability = XX%</code> in the product; the rest show <code>PartIQ Score = XX/100</code> instead.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>winning_model</th>
+      <th>best_calibration_method</th>
+      <th>ece</th>
+      <th>brier_score</th>
+      <th>raw_ece_uncalibrated</th>
+      <th>raw_brier_uncalibrated</th>
+      <th>is_well_calibrated</th>
+      <th>display_format</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0165</td>
+      <td>0.0092</td>
+      <td>0.0165</td>
+      <td>0.0092</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0160</td>
+      <td>0.0140</td>
+      <td>0.0160</td>
+      <td>0.0140</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>isotonic</td>
+      <td>0.0097</td>
+      <td>0.0060</td>
+      <td>0.0140</td>
+      <td>0.0119</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0510</td>
+      <td>0.0331</td>
+      <td>0.0510</td>
+      <td>0.0331</td>
+      <td>False</td>
+      <td>PartIQ Score = XX/100</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>isotonic</td>
+      <td>0.0009</td>
+      <td>0.0002</td>
+      <td>0.0074</td>
+      <td>0.0005</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>none</td>
+      <td>0.0515</td>
+      <td>0.0119</td>
+      <td>0.0515</td>
+      <td>0.0119</td>
+      <td>False</td>
+      <td>PartIQ Score = XX/100</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>isotonic</td>
+      <td>0.0001</td>
+      <td>0.0000</td>
+      <td>0.0016</td>
+      <td>0.0000</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>isotonic</td>
+      <td>0.0176</td>
+      <td>0.0223</td>
+      <td>0.0302</td>
+      <td>0.0241</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>isotonic</td>
+      <td>0.0020</td>
+      <td>0.0005</td>
+      <td>0.0287</td>
+      <td>0.0033</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0168</td>
+      <td>0.0149</td>
+      <td>0.0168</td>
+      <td>0.0149</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0154</td>
+      <td>0.0072</td>
+      <td>0.0154</td>
+      <td>0.0072</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>none</td>
+      <td>0.0130</td>
+      <td>0.0082</td>
+      <td>0.0130</td>
+      <td>0.0082</td>
+      <td>True</td>
+      <td>Probability = XX%</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>7. Test Set Performance (Final, Untouched Until All Tuning Complete)</h2>
+<div class="metric-grid">
+  <div class="metric-card"><div class="label">Micro F1</div><div class="value">0.9766</div></div>
+  <div class="metric-card"><div class="label">Macro F1</div><div class="value">0.9726</div></div>
+  <div class="metric-card"><div class="label">Weighted F1</div><div class="value">0.9764</div></div>
+  <div class="metric-card"><div class="label">Hamming Loss</div><div class="value">0.0095</div></div>
+  <div class="metric-card"><div class="label">Subset Accuracy (all 15 exact)</div><div class="value">0.8644</div></div>
+  <div class="metric-card"><div class="label">Mean Average Precision</div><div class="value">0.9941</div></div>
+</div>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>model</th>
+      <th>f1</th>
+      <th>precision</th>
+      <th>recall</th>
+      <th>false_positive_rate</th>
+      <th>false_negative_rate</th>
+      <th>support_positive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>0.9796</td>
+      <td>0.9897</td>
+      <td>0.9697</td>
+      <td>0.0079</td>
+      <td>0.0303</td>
+      <td>198</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9362</td>
+      <td>0.9167</td>
+      <td>0.9565</td>
+      <td>0.0047</td>
+      <td>0.0435</td>
+      <td>23</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>0.9231</td>
+      <td>0.9091</td>
+      <td>0.9375</td>
+      <td>0.0072</td>
+      <td>0.0625</td>
+      <td>32</td>
+    </tr>
+    <tr>
+      <td>Consolidate_Duplicate</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <td>Standard_Commercial_Action</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>0.9362</td>
+      <td>0.9429</td>
+      <td>0.9296</td>
+      <td>0.0106</td>
+      <td>0.0704</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>85</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>0.9730</td>
+      <td>1.0000</td>
+      <td>0.9474</td>
+      <td>0.0000</td>
+      <td>0.0526</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>0.9892</td>
+      <td>1.0000</td>
+      <td>0.9787</td>
+      <td>0.0000</td>
+      <td>0.0213</td>
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>0.9452</td>
+      <td>0.9517</td>
+      <td>0.9388</td>
+      <td>0.0231</td>
+      <td>0.0612</td>
+      <td>147</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9979</td>
+      <td>1.0000</td>
+      <td>0.9958</td>
+      <td>0.0000</td>
+      <td>0.0042</td>
+      <td>238</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9879</td>
+      <td>0.9760</td>
+      <td>1.0000</td>
+      <td>0.0091</td>
+      <td>0.0000</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9808</td>
+      <td>1.0000</td>
+      <td>0.9623</td>
+      <td>0.0000</td>
+      <td>0.0377</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>0.9401</td>
+      <td>0.9808</td>
+      <td>0.9027</td>
+      <td>0.0059</td>
+      <td>0.0973</td>
+      <td>113</td>
+    </tr>
+    <tr>
+      <td>IP_Legal_Review</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>37</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>8. Generalization Challenge</h2>
+<p>Held out the entire <b>Marine &amp; Offshore</b> sector (380/3,000 rows) from training entirely, retrained, and evaluated
+only on the unseen sector. Mean F1 degradation across all 15 targets: <b>-0.0086</b>
+(essentially flat &mdash; several targets scored better on the unseen sector).</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>target</th>
+      <th>model</th>
+      <th>held_out_sector_f1</th>
+      <th>held_out_sector_precision</th>
+      <th>held_out_sector_recall</th>
+      <th>original_test_f1</th>
+      <th>f1_degradation</th>
+      <th>support_positive_held_out</th>
+      <th>support_total_held_out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Keep_Physical</td>
+      <td>CatBoost</td>
+      <td>0.9911</td>
+      <td>0.9940</td>
+      <td>0.9882</td>
+      <td>0.9796</td>
+      <td>-0.0115</td>
+      <td>169</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Increase_Safety_Stock</td>
+      <td>CatBoost</td>
+      <td>0.9302</td>
+      <td>0.9091</td>
+      <td>0.9524</td>
+      <td>0.9362</td>
+      <td>0.0060</td>
+      <td>21</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Reduce_Stock</td>
+      <td>LightGBM</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.9231</td>
+      <td>-0.0769</td>
+      <td>26</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Consolidate_Duplicate</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>40</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Standard_Commercial_Action</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>51</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Digitize</td>
+      <td>CatBoost</td>
+      <td>0.9355</td>
+      <td>0.8788</td>
+      <td>1.0000</td>
+      <td>0.9362</td>
+      <td>0.0007</td>
+      <td>58</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Reverse_Engineer</td>
+      <td>LightGBM</td>
+      <td>0.9839</td>
+      <td>1.0000</td>
+      <td>0.9683</td>
+      <td>1.0000</td>
+      <td>0.0161</td>
+      <td>63</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Repair</td>
+      <td>XGBoost</td>
+      <td>0.9756</td>
+      <td>1.0000</td>
+      <td>0.9524</td>
+      <td>0.9730</td>
+      <td>-0.0026</td>
+      <td>21</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>OEM_Purchase</td>
+      <td>CatBoost</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.9892</td>
+      <td>-0.0108</td>
+      <td>80</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Local_Source</td>
+      <td>CatBoost</td>
+      <td>0.9362</td>
+      <td>0.9402</td>
+      <td>0.9322</td>
+      <td>0.9452</td>
+      <td>0.0090</td>
+      <td>118</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>CNC_Candidate</td>
+      <td>CatBoost</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.9979</td>
+      <td>-0.0021</td>
+      <td>206</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>AM_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9954</td>
+      <td>0.9908</td>
+      <td>1.0000</td>
+      <td>0.9879</td>
+      <td>-0.0075</td>
+      <td>108</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Cast_Forge_Candidate</td>
+      <td>CatBoost</td>
+      <td>0.9897</td>
+      <td>1.0000</td>
+      <td>0.9796</td>
+      <td>0.9808</td>
+      <td>-0.0089</td>
+      <td>49</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>Engineering_Review</td>
+      <td>CatBoost</td>
+      <td>0.9811</td>
+      <td>0.9873</td>
+      <td>0.9750</td>
+      <td>0.9401</td>
+      <td>-0.0410</td>
+      <td>80</td>
+      <td>380</td>
+    </tr>
+    <tr>
+      <td>IP_Legal_Review</td>
+      <td>Rule</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+      <td>32</td>
+      <td>380</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>9. Missing-Data Stress Test</h2>
+<p>Random cell-level corruption of non-critical fields at 10/20/30%, silently imputed. Degrades roughly linearly with no
+cliff &mdash; no single field is a brittle point of failure.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Corruption level</th>
+      <th>Mean F1 (corrupted)</th>
+      <th>Mean F1 (clean)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0.1</td>
+      <td>0.8535</td>
+      <td>0.9658</td>
+    </tr>
+    <tr>
+      <td>0.2</td>
+      <td>0.7647</td>
+      <td>0.9658</td>
+    </tr>
+    <tr>
+      <td>0.3</td>
+      <td>0.6694</td>
+      <td>0.9658</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Critical-Field Integrity</h3>
+<p>Safety_Critical / IP_Restriction / Standard_Commercial_Part / has_duplicate_group corrupted directly &mdash; all four
+correctly force review rather than silently guessing or crashing.</p>
+<table class="dataframe data-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>critical_field</th>
+      <th>downstream_target</th>
+      <th>n_samples</th>
+      <th>predictions_changed_when_corrupted</th>
+      <th>pct_changed</th>
+      <th>rows_forced_to_review</th>
+      <th>rows_abstained</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Safety_Critical</td>
+      <td>Engineering_Review</td>
+      <td>100</td>
+      <td>55</td>
+      <td>55.0</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>IP_Restriction</td>
+      <td>IP_Legal_Review</td>
+      <td>100</td>
+      <td>7</td>
+      <td>7.0</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>Standard_Commercial_Part</td>
+      <td>Standard_Commercial_Action</td>
+      <td>100</td>
+      <td>28</td>
+      <td>28.0</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>has_duplicate_group</td>
+      <td>Consolidate_Duplicate</td>
+      <td>100</td>
+      <td>9</td>
+      <td>9.0</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>10. Engineering Challenge Cases</h2>
+<p>64 programmatic cases across 8 archetypes (Section 24). Hard checks (deterministic rules) must always pass:
+<b>64/64 passed</b>. Soft checks (directional ML expectations) are reported with nuance in
+<code>reports/Stage13_Report.md</code> &mdash; several "misses" turned out to be over-strong assumptions on the report author's
+part rather than model defects, verified against real training-label base rates before being written up as findings.</p>
+
+<h2>11. Feature Importance</h2>
+<p>Per-prediction SHAP explanations available via <code>src/explain.py</code> and the <code>/explain-part</code> API endpoint.
+Global feature importance plots are generated on demand in the Streamlit app's Part Explorer page rather than baked into
+this static report, since they are most useful in the context of a specific part's prediction.</p>
+
+<h2>12. Limitations</h2>
+<div class="callout warn">
+<ul>
+<li>All data is synthetic. Class relationships (including the near-deterministic ones flagged for <code>Reverse_Engineer</code>
+and <code>OEM_Purchase</code>) reflect the synthetic generator's logic, not verified real-world engineering judgment.</li>
+<li>Hyperparameter tuning ran on a single-CPU-core sandbox with a reduced trial budget (10 trials/model instead of 30+)
+&mdash; worth widening on production hardware before treating current hyperparameters as final.</li>
+<li>Calibration was fit on half of a 450-row validation set (~225 rows) &mdash; thin for lower-prevalence targets.</li>
+<li>The generalization challenge covers one held-out sector; it demonstrates the model isn't overfitting to sector-specific
+noise, but cannot substitute for validation against independently-collected real engineering decisions.</li>
+<li>The lifecycle cost optimizer uses illustrative, documented assumptions (see <code>src/optimizer.py</code>), not a
+calibrated finance model.</li>
+<li>Out-of-distribution detection (Isolation Forest on numeric features) is a first pass, not a full categorical-aware
+novelty model.</li>
+</ul>
+</div>
+
+<footer>DPC PartIQ Demo v0.1 &middot; Synthetic data &middot; Generated by src/generate_report.py</footer>
+</div>
+</body>
+</html>

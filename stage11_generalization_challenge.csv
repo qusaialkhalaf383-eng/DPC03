@@ -1,0 +1,16 @@
+target,model,held_out_sector_f1,held_out_sector_precision,held_out_sector_recall,original_test_f1,f1_degradation,support_positive_held_out,support_total_held_out
+Keep_Physical,CatBoost,0.9911,0.994,0.9882,0.9796,-0.0115,169,380
+Increase_Safety_Stock,CatBoost,0.9302,0.9091,0.9524,0.9362,0.006,21,380
+Reduce_Stock,LightGBM,1.0,1.0,1.0,0.9231,-0.0769,26,380
+Consolidate_Duplicate,Rule,1.0,1.0,1.0,1.0,0.0,40,380
+Standard_Commercial_Action,Rule,1.0,1.0,1.0,1.0,0.0,51,380
+Digitize,CatBoost,0.9355,0.8788,1.0,0.9362,0.0007,58,380
+Reverse_Engineer,LightGBM,0.9839,1.0,0.9683,1.0,0.0161,63,380
+Repair,XGBoost,0.9756,1.0,0.9524,0.973,-0.0026,21,380
+OEM_Purchase,CatBoost,1.0,1.0,1.0,0.9892,-0.0108,80,380
+Local_Source,CatBoost,0.9362,0.9402,0.9322,0.9452,0.009,118,380
+CNC_Candidate,CatBoost,1.0,1.0,1.0,0.9979,-0.0021,206,380
+AM_Candidate,CatBoost,0.9954,0.9908,1.0,0.9879,-0.0075,108,380
+Cast_Forge_Candidate,CatBoost,0.9897,1.0,0.9796,0.9808,-0.0089,49,380
+Engineering_Review,CatBoost,0.9811,0.9873,0.975,0.9401,-0.041,80,380
+IP_Legal_Review,Rule,1.0,1.0,1.0,1.0,0.0,32,380

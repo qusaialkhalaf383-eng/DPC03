@@ -1,0 +1,189 @@
+{
+  "input_file": "/tmp/messy_real_data_test.xlsx",
+  "n_rows": 400,
+  "n_columns": 94,
+  "checks": {
+    "1_schema": {
+      "passed": false,
+      "missing_raw_fields": [
+        "Tolerance_Class"
+      ],
+      "missing_target_columns": [],
+      "has_part_id": true,
+      "has_model_split": true,
+      "note": null
+    },
+    "2_data_quality": {
+      "passed": false,
+      "issues": {
+        "impossible_values_Current_Stock_Qty": 1,
+        "impossible_values_Unit_Cost_AED": 1,
+        "impossible_values_Lead_Time_Days": 1
+      },
+      "missing_value_counts": {
+        "Duplicate_Group_ID": 362,
+        "Digitize": 30,
+        "Actual_Route": 323,
+        "Actual_Cost_AED": 323,
+        "Actual_Lead_Time_Days": 323,
+        "Inspection_Result": 323,
+        "Field_Operating_Hours": 323,
+        "Field_Failure": 323
+      }
+    },
+    "3_categorical_consistency": {
+      "passed": true,
+      "novel_categories_found": {
+        "OEM_Name": [
+          "NewLocalSupplierCo"
+        ],
+        "Material_Group": [
+          "stainless steel"
+        ]
+      },
+      "note": "New categories are expected in real data and are not errors -- but the model's categorical encoders need to see them during training/retraining to use them, and any that are typos/inconsistent spellings of an existing category should be fixed before training (e.g. 'stainless steel' vs 'Stainless Steel' would be treated as two different materials)."
+    },
+    "4_target_labels": {
+      "passed": false,
+      "per_target": {
+        "Keep_Physical": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 193,
+          "positive_rate": 0.4825,
+          "below_min_count": false
+        },
+        "Increase_Safety_Stock": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 24,
+          "positive_rate": 0.06,
+          "below_min_count": false
+        },
+        "Reduce_Stock": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 22,
+          "positive_rate": 0.055,
+          "below_min_count": false
+        },
+        "Consolidate_Duplicate": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 38,
+          "positive_rate": 0.095,
+          "below_min_count": false
+        },
+        "Standard_Commercial_Action": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 43,
+          "positive_rate": 0.1075,
+          "below_min_count": false
+        },
+        "Digitize": {
+          "n_missing_labels": 30,
+          "n_non_binary_values": 0,
+          "n_positive": 75,
+          "positive_rate": 0.2027,
+          "below_min_count": false
+        },
+        "Reverse_Engineer": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 70,
+          "positive_rate": 0.175,
+          "below_min_count": false
+        },
+        "Repair": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 27,
+          "positive_rate": 0.0675,
+          "below_min_count": false
+        },
+        "OEM_Purchase": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 78,
+          "positive_rate": 0.195,
+          "below_min_count": false
+        },
+        "Local_Source": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 124,
+          "positive_rate": 0.31,
+          "below_min_count": false
+        },
+        "CNC_Candidate": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 213,
+          "positive_rate": 0.5325,
+          "below_min_count": false
+        },
+        "AM_Candidate": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 114,
+          "positive_rate": 0.285,
+          "below_min_count": false
+        },
+        "Cast_Forge_Candidate": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 56,
+          "positive_rate": 0.14,
+          "below_min_count": false
+        },
+        "Engineering_Review": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 110,
+          "positive_rate": 0.275,
+          "below_min_count": false
+        },
+        "IP_Legal_Review": {
+          "n_missing_labels": 0,
+          "n_non_binary_values": 0,
+          "n_positive": 5,
+          "positive_rate": 0.0125,
+          "below_min_count": true
+        }
+      },
+      "blocking_issues": [
+        "IP_Legal_Review: only 5 positive examples (minimum 20 recommended)"
+      ]
+    },
+    "5_deterministic_rules": {
+      "passed": false,
+      "per_rule": {
+        "IP_Legal_Review": {
+          "checked": true,
+          "driver_field": "IP_Restriction",
+          "n_compared": 400,
+          "n_mismatches": 39,
+          "still_deterministic": false,
+          "recommendation": "CONVERT TO ML TARGET: 39/400 rows contradict the rule. Real engineering judgment apparently considers more than just IP_Restriction for this decision -- move it back into the 12 ML targets (src/tune.py, src/thresholds.py) rather than config/rules.yaml, and use IP_Restriction as a (presumably very strong) input feature instead of a hard gate."
+        },
+        "Standard_Commercial_Action": {
+          "checked": true,
+          "driver_field": "Standard_Commercial_Part",
+          "n_compared": 400,
+          "n_mismatches": 0,
+          "still_deterministic": true,
+          "recommendation": "Keep as a hard rule -- relationship still holds perfectly."
+        },
+        "Consolidate_Duplicate": {
+          "checked": false,
+          "reason": "driver field not resolvable/present"
+        }
+      }
+    }
+  },
+  "overall_ready_to_train": false,
+  "warnings_not_blocking": [
+    "5_deterministic_rules"
+  ]
+}

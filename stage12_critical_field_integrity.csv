@@ -1,0 +1,5 @@
+critical_field,downstream_target,n_samples,predictions_changed_when_corrupted,pct_changed,rows_forced_to_review,rows_abstained
+Safety_Critical,Engineering_Review,100,55,55.0,100,100
+IP_Restriction,IP_Legal_Review,100,7,7.0,100,100
+Standard_Commercial_Part,Standard_Commercial_Action,100,28,28.0,100,100
+has_duplicate_group,Consolidate_Duplicate,100,9,9.0,100,100

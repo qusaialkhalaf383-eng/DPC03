@@ -1,0 +1,13 @@
+target,winning_model,best_calibration_method,ece,brier_score,raw_ece_uncalibrated,raw_brier_uncalibrated,is_well_calibrated,display_format
+Keep_Physical,CatBoost,none,0.0165,0.0092,0.0165,0.0092,True,Probability = XX%
+Increase_Safety_Stock,CatBoost,none,0.016,0.014,0.016,0.014,True,Probability = XX%
+Reduce_Stock,LightGBM,isotonic,0.0097,0.006,0.014,0.0119,True,Probability = XX%
+Digitize,CatBoost,none,0.051,0.0331,0.051,0.0331,False,PartIQ Score = XX/100
+Reverse_Engineer,LightGBM,isotonic,0.0009,0.0002,0.0074,0.0005,True,Probability = XX%
+Repair,XGBoost,none,0.0515,0.0119,0.0515,0.0119,False,PartIQ Score = XX/100
+OEM_Purchase,CatBoost,isotonic,0.0001,0.0,0.0016,0.0,True,Probability = XX%
+Local_Source,CatBoost,isotonic,0.0176,0.0223,0.0302,0.0241,True,Probability = XX%
+CNC_Candidate,CatBoost,isotonic,0.002,0.0005,0.0287,0.0033,True,Probability = XX%
+AM_Candidate,CatBoost,none,0.0168,0.0149,0.0168,0.0149,True,Probability = XX%
+Cast_Forge_Candidate,CatBoost,none,0.0154,0.0072,0.0154,0.0072,True,Probability = XX%
+Engineering_Review,CatBoost,none,0.013,0.0082,0.013,0.0082,True,Probability = XX%
