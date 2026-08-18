@@ -1,0 +1,70 @@
+DPC PartIQ - Ready-to-Deploy Package
+========================================
+
+This zip contains EXACTLY the files your dpc02 repo needs, already named and
+structured correctly. No guessing which folders matter.
+
+streamlit_app.py               <- already named correctly (not "(1)")
+config/
+    calibration.json
+    column_classification.yaml
+    raw_field_defaults.json
+    rules.yaml
+    thresholds.json
+data/
+    raw/
+        dpc_partiq_raw.pkl
+models/
+    DPC_PartIQ_Demo_v0.1/
+        metadata.json
+        pipeline_bundle.joblib
+reports/
+    (19 files -- the Model Validation page reads these)
+
+
+HOW TO UPLOAD TO GITHUB (web browser, no git command line needed)
+---------------------------------------------------------------------
+1. Extract this zip on your computer first (double-click it, or right-click ->
+   Extract All). You should end up with a folder containing streamlit_app.py,
+   config/, data/, models/, reports/ as siblings.
+
+2. Go to your dpc02 repository on github.com.
+
+3. DELETE the old streamlit_app_standalone(1).py file first:
+   - Click on the file in your repo
+   - Click the trash-can icon (top right of the file view)
+   - Commit the deletion
+
+4. Click "Add file" -> "Upload files" (top right of the repo's file list).
+
+5. Drag the ENTIRE extracted folder's contents into the upload box -- not the
+   zip file itself, the folder contents (streamlit_app.py, config, data,
+   models, reports). Modern GitHub's upload box accepts whole folders dragged
+   in and preserves their structure automatically.
+
+6. Scroll down, write a commit message like "add standalone app + data files",
+   click "Commit changes directly to the main branch".
+
+7. Wait for the upload to finish (models/pipeline_bundle.joblib is ~7MB, may
+   take a minute depending on your connection).
+
+8. Go to your Streamlit Cloud app -> "Manage app" (bottom right) -> "Reboot app".
+
+9. Watch the logs. If anything is STILL missing, the error will name the exact
+   missing file/folder -- same pattern as the last two errors, each one named
+   exactly what was missing.
+
+
+WHY THIS SPECIFIC SET OF FILES
+-----------------------------------
+The app loads a pre-trained model bundle (models/) instead of retraining on
+startup, which is why it needs so little: calibration.json (read immediately
+on startup), the model bundle itself, the raw demo dataset (for the Portfolio
+Dashboard and Part Explorer to have something to show), and the reports/
+folder (only used by the Model Validation page, gracefully skipped if
+missing -- but included here so that page works too).
+
+NOT included on purpose (not needed at runtime, would only bloat the upload):
+data/processed/, data/templates/, data/example_*.csv -- these are used by
+the training pipeline (run_training.py) and the real-data migration kit, not
+by the deployed demo app itself.
