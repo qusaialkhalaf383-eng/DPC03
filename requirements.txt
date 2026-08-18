@@ -1,0 +1,42 @@
+# DPC PartIQ - requirements.txt
+# Python 3.12.3 (as developed/tested). Install with:
+#   pip install -r requirements.txt
+
+# Core data / ML
+pandas==3.0.2
+numpy==2.4.4
+scikit-learn==1.8.0
+scipy>=1.11
+
+# Boosting model families (Section 6)
+catboost==1.2.10
+xgboost==3.4.1
+lightgbm==4.7.0
+
+# Hyperparameter tuning + explainability
+optuna==4.9.0
+shap==0.52.0
+
+# Config, persistence
+PyYAML==6.0.3
+joblib==1.5.3
+
+# File I/O
+openpyxl==3.1.5
+pyarrow==24.0.0
+
+# API backend (Section 27)
+fastapi==0.141.1
+uvicorn==0.52.3
+pydantic>=2
+python-multipart
+
+# Demo UI (Section 28)
+streamlit==1.61.1
+plotly==6.9.0
+matplotlib==3.10.8
+reportlab==4.4.10
+
+# Testing (Section 32)
+pytest==9.1.1
+httpx  # required by fastapi.testclient
